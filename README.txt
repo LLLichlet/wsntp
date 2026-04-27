@@ -1,5 +1,7 @@
 WSNTP (What's Signed On The Picture?) is a picture signing tool running in the cmd lines.
 
+You can use `cargo install wsntp` to use it.
+
 The workflow
 |----------------------------|             |----------------------------|             |----------------------------|
 |                            |             |  Use the private key to    |             |                            |
