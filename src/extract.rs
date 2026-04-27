@@ -44,10 +44,7 @@ use rustfft::FftPlanner;
 ///
 /// `public_key` is the 32-byte Ed25519 public key used to locate the payload
 /// and verify the signature.  Returns the embedded message bytes on success.
-pub(crate) fn extract(
-    image: &RgbImage,
-    public_key: &[u8; 32],
-) -> Result<Vec<u8>, WsntpError> {
+pub(crate) fn extract(image: &RgbImage, public_key: &[u8; 32]) -> Result<Vec<u8>, WsntpError> {
     // --- block grid ---
     let (width, height) = (image.width() as usize, image.height() as usize);
     let cols = width / block::BLOCK;
@@ -175,8 +172,13 @@ fn try_decode(data: &[u8], expected_pubkey: &[u8; 32]) -> Result<Vec<u8>, WsntpE
     let payload = Payload::decode(&data[offset..])?;
 
     // Layer 1: signature verification
-    if !matches!(payload.verify_signature(), crate::crypto::VerifyResult::Valid) {
-        return Err(WsntpError::cli("signature verification failed — image may be tampered"));
+    if !matches!(
+        payload.verify_signature(),
+        crate::crypto::VerifyResult::Valid
+    ) {
+        return Err(WsntpError::cli(
+            "signature verification failed — image may be tampered",
+        ));
     }
 
     // Layer 2: pubkey comparison

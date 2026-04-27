@@ -81,7 +81,9 @@ impl KeyStore {
         let sec_path = self.keys_dir.join(format!("{alias}.secret"));
 
         if pub_path.exists() || sec_path.exists() {
-            return Err(WsntpError::cli(format!("key alias '{alias}' already exists")));
+            return Err(WsntpError::cli(format!(
+                "key alias '{alias}' already exists"
+            )));
         }
 
         let pub_tmp = self.keys_dir.join(format!(".{alias}.pub.tmp"));
@@ -178,9 +180,9 @@ impl KeyStore {
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(None),
             Err(e) => return Err(WsntpError::Io(e)),
         };
-        let config: toml::Value = content.parse().map_err(|e| {
-            WsntpError::cli(format!("malformed config.toml: {e}"))
-        })?;
+        let config: toml::Value = content
+            .parse()
+            .map_err(|e| WsntpError::cli(format!("malformed config.toml: {e}")))?;
         Ok(config
             .get("default_key")
             .and_then(|v| v.as_str())
@@ -192,10 +194,7 @@ impl KeyStore {
         if let Some(parent) = self.config_path.parent() {
             fs::create_dir_all(parent)?;
         }
-        fs::write(
-            &self.config_path,
-            format!("default_key = \"{alias}\"\n"),
-        )?;
+        fs::write(&self.config_path, format!("default_key = \"{alias}\"\n"))?;
         Ok(())
     }
 }
@@ -220,10 +219,7 @@ mod tests {
 
     fn temp_keystore() -> (KeyStore, TestDir) {
         let id = TEST_COUNTER.fetch_add(1, Ordering::SeqCst);
-        let tmp = std::env::temp_dir().join(format!(
-            "wsntp-test-{}-{id}",
-            std::process::id(),
-        ));
+        let tmp = std::env::temp_dir().join(format!("wsntp-test-{}-{id}", std::process::id(),));
         let keys_dir = tmp.join("keys");
         let config_path = tmp.join("config.toml");
         fs::create_dir_all(&keys_dir).unwrap();
@@ -252,12 +248,8 @@ mod tests {
     #[test]
     fn list_keys() {
         let (store, _cleanup) = temp_keystore();
-        store
-            .save("alice", &crypto::generate_keypair())
-            .unwrap();
-        store
-            .save("bob", &crypto::generate_keypair())
-            .unwrap();
+        store.save("alice", &crypto::generate_keypair()).unwrap();
+        store.save("bob", &crypto::generate_keypair()).unwrap();
 
         let aliases = store.list().unwrap();
         assert!(aliases.contains(&"alice".to_string()));

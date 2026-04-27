@@ -2,6 +2,17 @@
 name = "wsntp"
 version = "0.1.0"
 edition = "2021"
+authors = ["LLLichlet"]
+license = "AGPL-3"
+description = "WSNTP (What's Signed On The Picture?) is a picture signing tool running in the cmd lines."
+documentation = "https://doc.rs/wsntp"
+homepage = "https://lllichlet.github.io/wsntp/"
+repository = "https://github.com/LLLichlet/wsntp"
+keywords = ["image", "crypto", "sign", "cmdlines"]
+categories = ["command-line-utilities"]
+exclude = [
+    ".github/"
+]
 
 [dependencies]
 image = "0.25.10"

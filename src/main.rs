@@ -111,7 +111,13 @@ fn run() -> Result<(), WsntpError> {
             key,
             secret_key,
             message,
-        } => cmd_embed(&input, &output, key.as_deref(), secret_key.as_deref(), &message),
+        } => cmd_embed(
+            &input,
+            &output,
+            key.as_deref(),
+            secret_key.as_deref(),
+            &message,
+        ),
         Command::Extract {
             input,
             key,
@@ -224,9 +230,9 @@ fn resolve_alias<'a>(store: &'a KeyStore, alias: Option<&'a str>) -> Result<&'a 
     match alias {
         Some(a) => Ok(a),
         None => {
-            let default = store.default_alias()?.ok_or_else(|| {
-                WsntpError::cli("no key specified and no default key set")
-            })?;
+            let default = store
+                .default_alias()?
+                .ok_or_else(|| WsntpError::cli("no key specified and no default key set"))?;
             // Return a leaked string — only used ephemerally in CLI context
             // before process exit, so the leak is harmless.
             Ok(Box::leak(default.into_boxed_str()))

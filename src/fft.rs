@@ -159,11 +159,8 @@ fn rgb_complex_to_image(data: &RgbComplex) -> RgbImage {
         .into_par_iter()
         .map(|ch| compute_shifted_mags(ch, rows, cols, half_r, half_c))
         .collect();
-    let [
-        (r_mags, r_min, r_max),
-        (g_mags, g_min, g_max),
-        (b_mags, b_min, b_max),
-    ] = <[_; 3]>::try_from(results).unwrap();
+    let [(r_mags, r_min, r_max), (g_mags, g_min, g_max), (b_mags, b_min, b_max)] =
+        <[_; 3]>::try_from(results).unwrap();
 
     let scale = |v: f64, min: f64, max: f64| -> u8 {
         let range = max - min;

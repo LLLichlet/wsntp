@@ -65,7 +65,10 @@ pub(crate) fn extract_bit(value: f64, delta: f64) -> bool {
 
 /// Embed two bits (real, imag) into a complex coefficient.
 pub(crate) fn embed_complex(c: &Complex<f64>, bits: (bool, bool), delta: f64) -> Complex<f64> {
-    Complex::new(embed_bit(c.re, bits.0, delta), embed_bit(c.im, bits.1, delta))
+    Complex::new(
+        embed_bit(c.re, bits.0, delta),
+        embed_bit(c.im, bits.1, delta),
+    )
 }
 
 /// Extract two bits (real, imag) from a complex coefficient.
@@ -109,7 +112,10 @@ mod tests {
 
         // 0.6Δ is closer to 0Δ than 1Δ, so lands on 0
         let got = embed_bit(0.6 * DELTA, false, DELTA);
-        assert!((got - 0.0).abs() < 1e-10, "0.6Δ should round to 0, got {got}");
+        assert!(
+            (got - 0.0).abs() < 1e-10,
+            "0.6Δ should round to 0, got {got}"
+        );
     }
 
     #[test]
@@ -131,8 +137,11 @@ mod tests {
         for &d in &[1.0, 16.0, 100.0] {
             for &v in &[-50.0, 0.0, 50.0, 273.15] {
                 for &b in &[false, true] {
-                    assert_eq!(extract_bit(embed_bit(v, b, d), d), b,
-                        "delta={d}, value={v}, bit={b}");
+                    assert_eq!(
+                        extract_bit(embed_bit(v, b, d), d),
+                        b,
+                        "delta={d}, value={v}, bit={b}"
+                    );
                 }
             }
         }

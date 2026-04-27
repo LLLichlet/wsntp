@@ -34,10 +34,10 @@ use crate::error::WsntpError;
 const MAGIC: &[u8; 4] = b"WSNT";
 const VERSION: u8 = 0x01;
 
-const OFF_PUBKEY: usize = 6;   // after magic(4) + version(1) + reserved(1)
-const OFF_SIGNATURE: usize = 38;  // after pubkey(32)
-const OFF_MSG_LEN: usize = 102;   // after signature(64)
-const HEADER_SIZE: usize = 104;   // total overhead before message
+const OFF_PUBKEY: usize = 6; // after magic(4) + version(1) + reserved(1)
+const OFF_SIGNATURE: usize = 38; // after pubkey(32)
+const OFF_MSG_LEN: usize = 102; // after signature(64)
+const HEADER_SIZE: usize = 104; // total overhead before message
 
 pub(crate) struct Payload {
     pub public_key: [u8; 32],
@@ -116,7 +116,10 @@ impl Payload {
             return Err(WsntpError::cli("invalid magic bytes"));
         }
         if data[4] != VERSION {
-            return Err(WsntpError::cli(format!("unknown payload version: {}", data[4])));
+            return Err(WsntpError::cli(format!(
+                "unknown payload version: {}",
+                data[4]
+            )));
         }
         if data[5] != 0x00 {
             return Err(WsntpError::cli("reserved byte must be 0x00"));

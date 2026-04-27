@@ -121,7 +121,10 @@ fn embed_block(
     let mut b = Array2::zeros((block::BLOCK, block::BLOCK));
     for dy in 0..block::BLOCK {
         for dx in 0..block::BLOCK {
-            let px = image.get_pixel((bx * block::BLOCK + dx) as u32, (by * block::BLOCK + dy) as u32);
+            let px = image.get_pixel(
+                (bx * block::BLOCK + dx) as u32,
+                (by * block::BLOCK + dy) as u32,
+            );
             r[(dy, dx)] = Complex::new(px[0] as f64, 0.0);
             g[(dy, dx)] = Complex::new(px[1] as f64, 0.0);
             b[(dy, dx)] = Complex::new(px[2] as f64, 0.0);
