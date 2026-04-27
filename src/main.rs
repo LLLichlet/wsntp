@@ -203,7 +203,7 @@ fn load_public(alias: Option<&str>, raw: Option<&str>) -> Result<[u8; 32], Wsntp
     store.load_public(alias)
 }
 
-/// If an alias is given, use it.  Otherwise fall back to the default alias.
+/// If an alias is given, use it.  Otherwise, fall back to the default alias.
 fn resolve_alias<'a>(store: &'a KeyStore, alias: Option<&'a str>) -> Result<&'a str, WsntpError> {
     match alias {
         Some(a) => Ok(a),
