@@ -21,6 +21,7 @@
 use std::fmt;
 
 #[derive(Debug)]
+#[allow(dead_code)]
 pub(crate) enum WsntpError {
     /// User-facing CLI error (bad arguments, validation failures).
     Cli(String),
