@@ -11,7 +11,8 @@ repository = "https://github.com/LLLichlet/wsntp"
 keywords = ["image", "crypto", "sign", "cmdlines"]
 categories = ["command-line-utilities"]
 exclude = [
-    ".github/"
+    ".github/",
+    "index.html"
 ]
 
 [dependencies]
