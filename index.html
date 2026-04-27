@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>README</title>
+    <style>
+        body {
+            font-family: monospace;
+            white-space: pre-wrap;
+            padding: 2em;
+            background: #f6f8fa;
+        }
+    </style>
+</head>
+<body>
+    <pre id="content">Loading...</pre>
+
+    <script>
+        fetch('README.txt')
+            .then(response => {
+                if (!response.ok) throw new Error('README.txt not found');
+                return response.text();
+            })
+            .then(text => {
+                document.getElementById('content').textContent = text;
+            })
+            .catch(error => {
+                document.getElementById('content').textContent = 'README.txt could not be loaded.';
+                console.error(error);
+            });
+    </script>
+</body>
+</html>
