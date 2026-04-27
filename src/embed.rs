@@ -102,10 +102,6 @@ pub(crate) fn embed(
     Ok(output)
 }
 
-// ---------------------------------------------------------------------------
-// per-block embedding
-// ---------------------------------------------------------------------------
-
 /// Embed as many payload bits as possible into one 8×8 image block.
 fn embed_block(
     image: &mut RgbImage,
@@ -213,10 +209,6 @@ fn embed_in_channel(
     taken
 }
 
-// ---------------------------------------------------------------------------
-// utility
-// ---------------------------------------------------------------------------
-
 fn bytes_to_bits(bytes: &[u8]) -> Vec<bool> {
     let mut bits = Vec::with_capacity(bytes.len() * 8);
     for &b in bytes {
@@ -226,10 +218,6 @@ fn bytes_to_bits(bytes: &[u8]) -> Vec<bool> {
     }
     bits
 }
-
-// ---------------------------------------------------------------------------
-// tests
-// ---------------------------------------------------------------------------
 
 #[cfg(test)]
 mod tests {
